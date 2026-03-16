@@ -84,7 +84,6 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>mockwebserver</artifactId>
-            <version>${mockwebserver.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -100,7 +99,6 @@
         <dependency>
             <groupId>io.quarkiverse.playwright</groupId>
             <artifactId>quarkus-playwright</artifactId>
-            <version>${io.quarkiverse.playwright}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -117,7 +115,6 @@
                                 <path>
                                     <groupId>io.quarkus</groupId>
                                     <artifactId>quarkus-extension-processor</artifactId>
-                                    <version>${quarkus.version}</version>
                                 </path>
                             </annotationProcessorPaths>
                         </configuration>

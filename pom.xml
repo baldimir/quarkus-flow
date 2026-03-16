@@ -52,6 +52,7 @@
         <mockwebserver.version>5.3.2</mockwebserver.version>
         <version.org.jacoco>0.8.14</version.org.jacoco>
         <io.quarkiverse.playwright>2.3.2</io.quarkiverse.playwright>
+        <version.wiremock-standalone>3.13.2</version.wiremock-standalone>
     </properties>
 
     <dependencyManagement>
@@ -71,6 +72,19 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
+                <groupId>io.quarkiverse.langchain4j</groupId>
+                <artifactId>quarkus-langchain4j-bom</artifactId>
+                <version>${io.quarkiverse.langchain4j.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.quarkiverse.antora</groupId>
+                <artifactId>quarkus-antora</artifactId>
+                <version>${quarkus-antora.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>io.quarkiverse.jackson-jq</groupId>
                 <artifactId>quarkus-jackson-jq</artifactId>
                 <version>${io.quarkiverse.jackson-jq.version}</version>
@@ -85,10 +99,30 @@
                 <artifactId>cloudevents-json-jackson</artifactId>
                 <version>${io.cloudevents.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.quarkiverse.playwright</groupId>
+                <artifactId>quarkus-playwright</artifactId>
+                <version>${io.quarkiverse.playwright}</version>
+                <scope>test</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
                 <version>${org.assertj.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wiremock</groupId>
+                <artifactId>wiremock-standalone</artifactId>
+                <version>${version.wiremock-standalone}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>mockwebserver3</artifactId>
+                <version>${mockwebserver.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
@@ -112,6 +146,11 @@
                 <plugin>
                     <groupId>io.quarkus</groupId>
                     <artifactId>quarkus-config-doc-maven-plugin</artifactId>
+                    <version>${quarkus.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>io.quarkus</groupId>
+                    <artifactId>quarkus-extension-maven-plugin</artifactId>
                     <version>${quarkus.version}</version>
                 </plugin>
             </plugins>

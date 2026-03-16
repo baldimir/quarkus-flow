@@ -29,14 +29,10 @@
         <dependency>
             <groupId>io.quarkiverse.langchain4j</groupId>
             <artifactId>quarkus-langchain4j-agentic-deployment</artifactId>
-            <version>${io.quarkiverse.langchain4j.version}</version>
         </dependency>
-
-
         <dependency>
             <groupId>io.quarkiverse.langchain4j</groupId>
             <artifactId>quarkus-langchain4j-ollama-deployment</artifactId>
-            <version>${io.quarkiverse.langchain4j.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -70,7 +66,6 @@
                                 <path>
                                     <groupId>io.quarkus</groupId>
                                     <artifactId>quarkus-extension-processor</artifactId>
-                                    <version>${quarkus.version}</version>
                                 </path>
                             </annotationProcessorPaths>
                         </configuration>
