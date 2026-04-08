@@ -14,11 +14,10 @@ on:
         type: string
         required: true
 
-# TODO - update permissions - e.g. add pull request write etc. 
 permissions:
-  attestations: write
   id-token: write
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   create-platform-pr:
@@ -57,7 +56,7 @@ jobs:
             
             /cc @baldimir @ricardozanini @fjtirado
           branch: quarkus-flow-release-${{inputs.tag}}
-          token: ${{ secrets.QUARKUS_FLOW_BOT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           push-to-fork: quarkus-flow-bot/quarkus-platform
           delete-branch: true
           labels: |
