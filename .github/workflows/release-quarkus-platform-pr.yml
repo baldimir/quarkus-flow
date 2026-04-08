@@ -1,0 +1,73 @@
+name: Create Quarkus Platform PR
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        type: string
+        description: 'Quarkus Flow tag to publish on platform'
+        required: true
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Quarkus Flow tag to publish on platform'
+        type: string
+        required: true
+
+# TODO - update permissions - e.g. add pull request write etc. 
+permissions:
+  attestations: write
+  id-token: write
+  contents: read
+
+jobs:
+  create-platform-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: quarkusio/quarkus-platform
+          ref: main
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          cache: 'maven'
+
+      - name: Update Quarkus Flow version to ${{inputs.tag}}
+        run: |
+          sed -i 's/<quarkus-flow\.version>.*<\/quarkus-flow\.version>/<quarkus-flow.version>${{inputs.tag}}<\/quarkus-flow.version>/' pom.xml
+          ./mvnw -Dsync
+
+      - name: Create quarkus-platform pull request
+        uses: peter-evans/create-pull-request@v6
+        id: qp-pr
+        with:
+          title: "Update Quarkus Flow to ${{inputs.tag}}"
+          commit-message: "Update Quarkus Flow to ${{inputs.tag}}"
+          body: |
+            This PR was automatically created by the Quarkus Flow release workflow, run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
+            This PR updates Quarkus Flow to version ${{inputs.tag}}.
+            
+            **Changes:**
+            - Updated `quarkus-flow.version` property in root pom.xml
+            - Regenerated platform modules
+            
+            /cc @baldimir @ricardozanini @fjtirado
+          branch: quarkus-flow-release-${{inputs.tag}}
+          token: ${{ secrets.QUARKUS_FLOW_BOT_TOKEN }}
+          push-to-fork: quarkus-flow-bot/quarkus-platform
+          delete-branch: true
+          labels: |
+            dependencies
+            quarkus-flow
+
+      - name: Check quarkus-platform PR
+        if: ${{ steps.qp-pr.outputs.pull-request-number }}
+        run: |
+          echo "Pull Request Number - ${{ steps.qp-pr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.qp-pr.outputs.pull-request-url }}"
+
+# Made with Bob

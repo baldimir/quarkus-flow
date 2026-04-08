@@ -26,3 +26,11 @@ jobs:
     secrets: inherit
     with:
       version: ${{github.event.inputs.tag || github.ref_name}}
+
+  create-quarkus-platform-pr:
+    name: Create Quarkus Platform PR
+    needs: perform-release
+    uses: ./.github/workflows/release-quarkus-platform-pr.yml
+    with:
+      tag: ${{github.event.inputs.tag || github.ref_name}}
+    secrets: inherit
